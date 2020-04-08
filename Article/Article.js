@@ -20,7 +20,7 @@ const data = [
     thirdParagraph: `Dagobah hutt jawa leia calamari ventress skywalker yoda. Binks wicket hutt coruscant sidious
         naboo ackbar tatooine. Hutt lars padmé darth. Maul solo darth darth jabba qui-gon chewbacca darth maul. Moff baba wicket
         han. C-3po antilles moff qui-gon ahsoka aayla dooku amidala. Palpatine droid amidala droid k-3po twi'lek padmé wookiee. Leia
-        moff calamari mon obi-wan. Solo grievous lando coruscant. Jinn darth palpatine obi-wan mon.`
+        moff calamari mon obi-wan. Solo grievous lando coruscant. Jinn darth palpatine obi-wan mon.`,
   },
   {
     title: 'Javascript and You, ES6',
@@ -40,7 +40,7 @@ const data = [
     thirdParagraph: `Toad-like smile Flourish and Blotts he knew I’d come back Quidditch World Cup. Fat Lady baubles banana fritters fairy lights 
         Petrificus Totalus. So thirsty, deluminator firs’ years follow me 12 inches of parchment. Head Boy start-of-term banquet Cleansweep Seven 
         roaring lion hat. Unicorn blood crossbow mars is bright tonight, feast Norwegian Ridgeback. Come seek us where our voices sound, we cannot 
-        sing above the ground, Ginny Weasley bright red. Fanged frisbees, phoenix tears good clean match.`
+        sing above the ground, Ginny Weasley bright red. Fanged frisbees, phoenix tears good clean match.`,
   },
   {
     title: 'React vs Angular vs Vue',
@@ -68,7 +68,7 @@ const data = [
 
     thirdParagraph: `Gotta catch 'em all Horsea gym Ninjask Absol Sinnoh Poliwag. Gotta catch 'em all Youngster wants to fight Soda Pop Floatzel 
         Leech Life Seismitoad Ariados. Earthquake Pokemon Glitch City Tail Whip Skitty Ekans Dialga. Ut aliquip ex ea commodo consequat James 
-        Castform Lotad the power that's inside Burnt Berry Makuhita. Ghost Ariados Corphish Dusclops Golbat Gligar Zweilous.`
+        Castform Lotad the power that's inside Burnt Berry Makuhita. Ghost Ariados Corphish Dusclops Golbat Gligar Zweilous.`,
   },
   {
     title: 'Professional Software Development in 2019',
@@ -84,9 +84,9 @@ const data = [
 
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
-          Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
-  }
-];
+          Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`,
+  },
+]
 
 /* Step 1: Create a function that creates a component. You will want your component to look like the template below: 
   
@@ -102,13 +102,58 @@ const data = [
   Hint: You will need to use createElement more than once here!
 
   Your function should take either an object as it's one argument, or 5 separate arguments mapping to each piece of the data object above.
-
-  Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
-
-  Step 3: return the entire component.
-
-  Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
-
-  Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
-
 */
+
+const articles = document.querySelector('.articles')
+
+const makeArticle = ({
+  title,
+  date,
+  firstParagraph,
+  secondParagraph,
+  thirdParagraph,
+}) => {
+  //create the elements
+  const article = document.createElement('div')
+  const articleHeader = document.createElement('h2')
+  const articleDate = document.createElement('p')
+  const articleParagraphOne = document.createElement('p')
+  const articleParagraphTwo = document.createElement('p')
+  const articleParagraphThree = document.createElement('p')
+  const articleSpan = document.createElement('span')
+
+  //Structure the elements to be part of the parent
+  article.appendChild(articleHeader)
+  article.appendChild(articleDate)
+  article.appendChild(articleParagraphOne)
+  article.appendChild(articleParagraphTwo)
+  article.appendChild(articleParagraphThree)
+  article.appendChild(articleSpan)
+
+  //Give class name to the elements that needs them
+  article.classList.add('article')
+  articleDate.classList.add('date')
+  articleSpan.classList.add('expandButton')
+
+  //Set the content to each provider
+  articleHeader.textContent = title
+  articleDate.textContent = date
+  articleParagraphOne.textContent = firstParagraph
+  articleParagraphTwo.textContent = secondParagraph
+  articleParagraphThree.textContent = thirdParagraph
+  articleSpan.textContent = '\u25bc'
+
+  //Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
+  articleSpan.addEventListener('click', e => {
+    article.classList.toggle('article-open')
+  })
+
+  //Step 3: return the entire component.
+  return article
+}
+
+//Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
+//Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
+data.forEach(element => {
+  articles.appendChild(makeArticle(element))
+})
